@@ -1,0 +1,27 @@
+<div class="pagination">
+    {% if items.has_previous %}
+        <a class="pagination-action" 
+		href="?page=1">
+		&Lang;</a>
+        <a class="pagination-action" 
+		href="?page={{ items.previous_page_number }}">
+		&lang;</a>
+    {% else %}
+        <span class="pagination-action-disabled">&Lang;</span>
+        <span class="pagination-action-disabled">&lang;</span>
+    {% endif %}
+    <span class="pagination-current">{{ items.number }}</span>
+    <span class="pagination-of">z</span>
+    <span class="pagination-total">{{ items.paginator.num_pages }}</span>
+    {% if items.has_next %}
+        <a class="pagination-action" 
+		href="?page={{ items.next_page_number }}">
+		&rang;</a>
+        <a class="pagination-action" 
+		href="?page={{ items.paginator.num_pages }}">
+		&Rang;</a>
+    {% else %}
+        <span class="pagination-action-disabled">&rang;</span>
+	<span class="pagination-action-disabled">&Rang;</span>
+    {% endif %}
+</div>

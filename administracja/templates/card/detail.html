@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Szczegóły karty {{ card.id }} {% endblock %}
+
+{% block content %}
+
+{% if card.id %}
+ <h1>Szczegóły karty {{ card.id }}</h1>
+   <table>
+      <thead>
+         <tr>
+	    <th>Cecha</th>
+            <th>Wartość</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr {% if card.active is not True %} class="inactive" {% endif %}>
+		 <td>ID / numer karty</td>
+		 <td>{{ card.id }}</td>
+         </tr>
+         <tr>
+		 <td>Typ</td>
+		 <td>{{ card.type }}</td>
+         </tr>
+      </tbody>
+   </table>
+   <div class="buttons">
+	<a class="button" href="{{ card.get_admin_url }}"
+		rel="noopener noreferrer" target="_blank">Edytuj</a>
+   	<a class="button" href="{{ card.add_admin_url }}"
+		rel="noopener noreferrer" target="_blank">Dodaj rekord</a>
+   </div>
+{% else %}
+  <h1>Brak karty</h1>
+  <p>Brak karty o podanym ID w bazie, lub ID jest niepoprawne.</p>
+{% endif %}
+{% endblock %}
+

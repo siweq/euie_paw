@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <link href="{% static "css/skdadm.css" %}" rel="stylesheet">
+    <link href="{% static "css/pagination.css" %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{%  static "favicon.ico" %}">
+  </head>
+  <body>
+    <div id="header">
+      <span class="logo">
+	<a href="{% url "dashboard" %}">
+        <img src="{% static "img/skdlogo_w.png" %}" alt="SKD logo" height="45" title="SKD | Home">
+	</a>
+      </span>
+
+    {% if request.user.is_authenticated %}
+    {% block menu %}
+      {% include "menu.html" %}
+    {% endblock %}
+    {% endif %}
+
+    </div>
+    <div id="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>

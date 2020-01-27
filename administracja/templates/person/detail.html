@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Szczegóły {{ person.name }} {% endblock %}
+
+{% block content %}
+{% if person.id %}
+<h1>Szczegóły osoby: {{ person.name }}</h1>
+   <table>
+      <thead>
+         <tr>
+	    <th>Cecha</th>
+            <th>Wartość</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr {% if person.active is not True %} class="inactive" {% endif %}>
+		 <td>ID</td>
+		 <td>{{ person.id }}</td>
+         </tr>
+         <tr>
+		 <td>Imię i nazwisko</td>
+		 <td>{{ person.name }}</td>
+         </tr>
+	 <!-- 
+	 PESEL
+	 hire_date
+	 fire_date
+	 active
+	 anonymized
+	 anonymization
+	 created
+	 updated
+	 -->
+      </tbody>
+   </table>
+{% endif %}
+{% if request.user.is_staff %} 
+   <div class="buttons">
+	<a class="button" href="{{ person.get_admin_url }}"
+		rel="noopener noreferrer" target="_blank">Edytuj</a>
+	<a class="button" href="{{ person.add_admin_url }}"
+		rel="noopener noreferrer" target="_blank">Dodaj rekord</a>
+   </div>
+{% endif %}
+{% endblock %}
+

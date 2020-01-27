@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Użytkownicy systemu{% endblock %}
+{% block content %}
+	<h1>Użytkownicy systemu</h1>
+	<table>
+	<thead>
+		<tr>
+			<th>Pracownik</th>
+			<th>Data<br>zatrudnienia</th>
+			<th>Aktywny</th>
+			<th>Admin</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for person in person_list %}
+	<tr>
+	<font {% if person.active is not True %} class='inactive' {% endif %}>
+			<td><a href="{{ person.get_absolute_url }}">
+				{{ person.name }}</a></td>
+			<td>{{ person.hire_date | date:'Y-m-d' }}</td>
+			<td>{{ person.active | yesno:'Tak,Nie,-' }}</td>
+			<td>{{ person.admin | yesno:'Tak,Nie,-' }}</td> 
+	</font>
+	</tr>
+	{% endfor %}
+	</tbody>
+    </table>
+{% if page_obj.paginator.num_pages > 1 %}
+    <!-- start -->
+    {% include '_pagination.html' with items=page_obj %}
+    <!-- end -->
+{% endif %}
+<div class="buttons">
+   <a class="button" 
+	href="http://172.16.1.11:8000/admin/administracja/person/add/"
+	rel="noopener noreferrer" target="_blank">
+	dodaj nową</a>
+</div>
+{% endblock %}

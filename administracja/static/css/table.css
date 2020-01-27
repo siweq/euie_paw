@@ -1,0 +1,53 @@
+/* file imported un a main css file skdadm.css */
+
+table {
+	font-family: 'Muli', Georgia, serif;
+	border: 2px solid #24943A;
+	background-color: #EAFAF1; /* #DBF6D8*/
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+}
+table td, table th {
+	border: 1px solid #24943A;
+	padding: 3px 2px;
+}
+
+table td a {
+	font-weight: bold;
+}
+
+table tbody td {
+	font-size: 14px;
+}
+table tr:nth-child(even) {
+	background: #D5F5E3; /*#C9E2C6;*/
+}
+table thead {
+	background: #12c064;
+	border-bottom: 0px solid #444444;
+}
+table thead th {
+	font-size: 15px;
+	font-weight: bold;
+	color: #F0F0F0;
+	text-align: left;
+	border-left: 2px solid #24943A;
+}
+table thead th:first-child {
+	border-left: none;
+}
+
+table tfoot td {
+	font-size: 13px;
+}
+table tfoot .links {
+	text-align: right;
+}
+table tfoot .links a{
+	display: inline-block;
+	background: #FFFFFF;
+	color: #24943A;
+	padding: 2px 8px;
+	border-radius: 5px;
+}

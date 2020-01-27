@@ -1,0 +1,25 @@
+    <ul class="menu">
+	    <li {% if section == "dashboard" %}class="selected"{% endif %}>
+		    <a href="{% url "dashboard" %}">Home</a>
+	    </li>
+	    <li {% if section == "persons" %}class="selected"{% endif %}>
+		    <a href="{% url "persons" %}">Osoby</a>
+	    </li>
+	    <li {% if section == "cards" %}class="selected"{% endif %}>
+		    <a href="{% url "cards2" %}">Karty</a>
+	    </li>
+	    {% if request.user.is_staff %}
+	    <li>
+		    <a href="{% url 'admin:login' %}">Administrator</a>
+	    </li>
+	    {% endif %}
+    </ul>
+    <span class="user">
+	    {% if request.user.is_authenticated %}
+	       Witaj, {{ request.user.first_name }}!<br>
+	       <a href="{% url "logout" %}">Wyloguj</a><br>
+	       <a href="{% url "password_change" %}">Zmiana hasła</a>
+	    {% else %}
+	        <a href="{% url "login" %}">Zaloguj</a>
+	    {% endif %}
+    </span>

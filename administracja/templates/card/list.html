@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}zarejestrowane karty{% endblock %}
+{% block content %}
+	<h1>Zarejestrowane karty</h1>
+	<table>
+	<thead>
+		<tr>
+			<th>ID karty</th>
+			<th>Typ</th>
+			<th>Aktywna</th>
+			<th>Użytkownik</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for card in cards %}
+		<tr {% if card.active is not True %} class="inactive" {% endif %}>
+			<td><a href="/karty/{{ card.id }}">
+				{{ card.id | upper }}</a></td>
+			<td>{{ card.type | upper }}</td>
+			<td>{{ card.active | yesno:'Tak,Nie,-' }}</td>
+			<td>{{ card.person | yesno:'Tak,Nie,-' }}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+	</table>
+{% endblock %}

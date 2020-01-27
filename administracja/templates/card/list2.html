@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}zarejestrowane karty{% endblock %}
+{% block content %}
+	<h1>Zarejestrowane karty</h1>
+	{% if card_list2 %}
+	<table>
+	<thead>
+		<tr>
+			<th>ID karty</th>
+			<th>Typ</th>
+			<th>Status</th>
+			<th>Aktywna</th>
+			<th>Użytkownik</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for card in page_obj %}
+		<tr {% if card.active is not True %} class="inactive" {% endif %}>
+			<td><a href="{{ card.get_absolute_url }}">
+				{{ card.id | upper }}</a></td>
+			<td>{{ card.get_type_display }}</td>
+			<td>{{ card.get_status_display }}</td>
+			<td>{{ card.active | yesno:'Tak,Nie,-' }}</td>
+			<td>{{ card.person }}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+	</table>
+	{% else %}
+	    <p>Brak kart w bazie.</p>
+	{% endif %} 
+
+{% if page_obj.paginator.num_pages > 1 %}
+    <!-- start -->
+    {% include '_pagination.html' with items=page_obj %}
+    <!-- end -->
+{% endif %}
+<div class="buttons">
+   <a class="button" 
+	href="http://172.16.1.11:8000/admin/administracja/card/add/"
+	rel="noopener noreferrer" target="_blank">
+	dodaj nową</a>
+</div>
+{% endblock %}
