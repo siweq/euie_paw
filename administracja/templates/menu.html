@@ -16,9 +16,13 @@
     </ul>
     <span class="user">
 	    {% if request.user.is_authenticated %}
-	       Witaj, {{ request.user.first_name }}!<br>
-	       <a href="{% url "logout" %}">Wyloguj</a><br>
-	       <a href="{% url "password_change" %}">Zmiana hasła</a>
+	    <div class="dropdown">
+		    <span>Witaj, {{ request.user.first_name }}!</span>
+		    <button class="dropbtn">Menu profil</button>
+		    <div class="dropdown-content">
+			<a href="{% url "logout" %}">Wyloguj</a>
+			<a href="{% url "password_change" %}">Zmiana hasła</a>
+		    </div></span></div>
 	    {% else %}
 	        <a href="{% url "login" %}">Zaloguj</a>
 	    {% endif %}

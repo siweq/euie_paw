@@ -1,39 +1,55 @@
 {% extends "base.html" %}
 
-{% block title %}Szczegóły {{ person.name }} {% endblock %}
+{% block title %}Szczegóły osoby{% endblock %}
+
 
 {% block content %}
 {% if person.id %}
+{% if person.anonymized %}
+<h1>Dane osoby zostały zanonimizowane</h1>
+<p>Dane pracownika o ID {{ person.id }} zostały zanonimizowane w dniu {{ person.anonymization }}.<br>
+Skontaktuj się z administratorem systemu.</p>
+<div class="buttons">
+	<a class="button" href="{% url "persons" %}">Powrót</a>
+</div>
+{% else %}
 <h1>Szczegóły osoby: {{ person.name }}</h1>
    <table>
       <thead>
-         <tr>
-	    <th>Cecha</th>
-            <th>Wartość</th>
-         </tr>
+        <tr>
+	   <th>Cecha</th>
+           <th>Wartość</th>
+        </tr>
       </thead>
       <tbody>
-         <tr {% if person.active is not True %} class="inactive" {% endif %}>
+        <tr {% if person.active is not True %} class="inactive" {% endif %}>
 		 <td>ID</td>
 		 <td>{{ person.id }}</td>
-         </tr>
-         <tr>
+        </tr>
+        <tr>
 		 <td>Imię i nazwisko</td>
 		 <td>{{ person.name }}</td>
-         </tr>
-	 <!-- 
-	 PESEL
-	 hire_date
-	 fire_date
-	 active
-	 anonymized
-	 anonymization
-	 created
-	 updated
-	 -->
+        </tr>
+	<tr>
+		 <td>PESEL</td>
+		 <td>{{ person.pesel}}</td>
+	</tr>
+	<tr>
+		<td>Data zatrudnienia / zwolnienia</td>
+		<td>{{ person.hire_date | date:"d-m-Y" }} {% if person.fire_date %} / {{ person.fire_date | date:"d-m-Y" }}{% endif %}</td>
+	</tr>
+	<tr>
+		<td>Status aktywności</td>
+		<td>{{ person.active | yesno:'Aktywna,Zablokowana,-' }}</td>
+	</tr>
+	<tr>
+		<td>Anonimizacja / data</td>
+		<td>{{ person.anonymized | yesno:'Tak,Nie,-' }}
+			{% if person.fire_date %} / {{ person.anonymization_date|date:"d-m-Y" }}{% endif %}</td>
+	</tr>
       </tbody>
    </table>
-{% endif %}
+   <div class="footer" colspan="2">Data utworzenia:{{ person.created | date:"d-m-Y" }} / modyfikacji: {{ person.updated| date:"d-m-Y" }}</div>
 {% if request.user.is_staff %} 
    <div class="buttons">
 	<a class="button" href="{{ person.get_admin_url }}"
@@ -42,5 +58,6 @@
 		rel="noopener noreferrer" target="_blank">Dodaj rekord</a>
    </div>
 {% endif %}
+{% endif %}
+{% endif %}
 {% endblock %}
-

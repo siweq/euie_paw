@@ -15,7 +15,7 @@
 	{% for person in person_list %}
 	<tr>
 	<font {% if person.active is not True %} class='inactive' {% endif %}>
-			<td><a href="{{ person.get_absolute_url }}">
+			<td><a class="external" href="{{ person.get_absolute_url }}">
 				{{ person.name }}</a></td>
 			<td>{{ person.hire_date | date:'Y-m-d' }}</td>
 			<td>{{ person.active | yesno:'Tak,Nie,-' }}</td>

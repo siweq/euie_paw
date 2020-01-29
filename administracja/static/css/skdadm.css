@@ -90,6 +90,14 @@ ol {
     padding:30px 100px;
 }
 
+.footer {
+    font-family:'Andale Mono', Monaco, monospace;
+    font-size:11px;
+    float:right;
+    color:gray;
+    padding:5px 0 5px 0;
+}
+
 .inactive {
     color:#404040;
     font-weight:normal;
@@ -147,6 +155,44 @@ input[type=submit], a.button {
     padding-top: 25px;
     padding-bottom 25px;
 }
+
+/* dropdown menu */
+.dropbtn {
+    background-color: #4CAF50;
+    font-family: 'Muli', sans-serif;
+    color:#f3f7cc;
+    font-size:20px;
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 125px;
+    box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
 
 /* messages */
 ul.messages {
