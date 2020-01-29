@@ -2,13 +2,14 @@
 
 {% block title %}Szczegóły osoby{% endblock %}
 
-
 {% block content %}
 {% if person.id %}
 {% if person.anonymized %}
 <h1>Dane osoby zostały zanonimizowane</h1>
-<p>Dane pracownika o ID {{ person.id }} zostały zanonimizowane w dniu {{ person.anonymization }}.<br>
-Skontaktuj się z administratorem systemu.</p>
+<ul class="messages">
+<li class="info">Dane pracownika o ID {{ person.id }} zostały zanonimizowane w dniu {{ person.hash_date | date:"d-m-Y" }}.<br>
+W sprawie szczegółw, skontaktuj się z administratorem systemu.</li>
+</ul>
 <div class="buttons">
 	<a class="button" href="{% url "persons" %}">Powrót</a>
 </div>
@@ -45,19 +46,61 @@ Skontaktuj się z administratorem systemu.</p>
 	<tr>
 		<td>Anonimizacja / data</td>
 		<td>{{ person.anonymized | yesno:'Tak,Nie,-' }}
-			{% if person.fire_date %} / {{ person.anonymization_date|date:"d-m-Y" }}{% endif %}</td>
+			{% if person.fire_date %} / {{ person.hash_date|date:"d-m-Y" }}{% endif %}</td>
 	</tr>
       </tbody>
    </table>
-   <div class="footer" colspan="2">Data utworzenia:{{ person.created | date:"d-m-Y" }} / modyfikacji: {{ person.updated| date:"d-m-Y" }}</div>
-{% if request.user.is_staff %} 
+   <div class="footer" colspan="2">Data ostatniej modyfikacji: {{ person.updated| date:"d-m-Y" }}</div>
+
+{# Buttons - osoba #}
    <div class="buttons">
+	<a class="button" href="{% url "persons" %}">Powrót</a>
+{% if request.user.is_staff %} 
 	<a class="button" href="{{ person.get_admin_url }}"
 		rel="noopener noreferrer" target="_blank">Edytuj</a>
 	<a class="button" href="{{ person.add_admin_url }}"
-		rel="noopener noreferrer" target="_blank">Dodaj rekord</a>
+		rel="noopener noreferrer" target="_blank">Nowa osoba</a>
+{% endif %}
+   </div>
+
+{# Karty wydane #}
+{% if person.assigned_cards %}
+<H2>Karty przypisane </h2>
+{% if person.assigned_active_cards|length > 1 %} 
+<ul class="messages">
+<li class="warning">Uwaga! Przypisano więcej niż jedną aktywną kartę do osoby.</li>
+</ul>
+{% endif %}
+<table>
+	<thead>
+		<tr>
+			<th>ID karty (typ)</th>
+                        <th>Data wydania karty</th>
+                        <th>Data ważności karty</th>
+                        <th>Status</th>
+                </tr>
+        </thead>
+        <tbody>
+	  {% for card in person.assigned_cards %}
+                <tr>
+		    <td><a href="{{ card.get_absolute_url }}">
+		                 {{ card.id | upper }}
+				({{ card.get_type_display }})</a></td>
+		    <td>{{ card.updated | date:"d-m-Y" }}</td>
+		    <td>{{ card.valid_date | date:"d-m-Y" }}</td>
+        	    <td>{{ card.get_status_display }}
+		    ({{ card.active | yesno:'Aktywna,Nieaktywna,-' }})</td>
+                </tr>
+	  {% endfor %}
+        </tbody>
+    </table>
+{# Buttons - karta #}
+   <div class="buttons">
+	   <a class="button" href="{{ person.get_admin_url }}">
+		   Przypisanie kart</a>
    </div>
 {% endif %}
+
 {% endif %}
 {% endif %}
 {% endblock %}

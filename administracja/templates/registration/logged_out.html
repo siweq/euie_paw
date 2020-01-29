@@ -4,6 +4,8 @@
 
 {% block content %}
 <h1>Wylogowanie</h1>
-<p>Zostałeś pomyślnie wylogowany. Możesz <a href="{% url "login" %}">zalogować się ponownie</a>.</p>
+<ul class="messages">
+	<li class="success">Zostałeś pomyślnie wylogowany. Możesz <a href="{% url "login" %}" style="color:#1b6d32">zalogować się ponownie</a>.</li>
+</ul>
 {% endblock %}
 

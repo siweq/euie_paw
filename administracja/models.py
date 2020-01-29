@@ -3,6 +3,7 @@ from django.utils import timezone
 from datetime import date, datetime, timedelta
 from django.contrib.auth.models import User
 from django.urls import reverse
+import administracja.tools as tools
 
 # Prywatne menadzery modeli
 '''
@@ -10,10 +11,10 @@ Przykadowe wywołania:
 Card.activeCards.all() - zwraca wszystkie aktywne karty
 Card.activeCards.filter(type='HID') - tylko aktywne typu HID
 '''
-class ActiveManager(models.Manager):
-    def get_queryset(self):
-        return super(ActiveManager,self).get_queryset()\
-                                        .filter(active=True)
+#class ActiveManager(models.Manager):
+#    def get_queryset(self):
+#        return super(ActiveManager,self).get_queryset()\
+#                                        .filter(active=True)
 
 # Modela bazy danych dla ORM
 class Room(models.Model):
@@ -89,7 +90,7 @@ class Person(models.Model):
             verbose_name='Aktywna')
     anonymized = models.BooleanField(default=False,
             verbose_name='Zanomizowana') 
-    anonymization_date = models.DateField(blank=True,
+    hash_date = models.DateField(blank=True,
             null=True,
             verbose_name='Data anonimizacji')
     retention = models.IntegerField(default=5,
@@ -120,13 +121,30 @@ class Person(models.Model):
             self._meta.model_name))
 
     def get_retention_date(self):
-        if self.anonymization_date:
-            retention_date = self.anonymization_date
+        if self.hash_date:
+            retention_date = self.hash_date
         elif self.fire_date and self.active is not True:
             retention_date = date(self.fire_date.year+self.retention,12,31)
         else:
             retention_date = None
         return retention_date
+
+    def assigned_cards(self):
+        karty = Card.objects.filter(status=1,person=self.id)
+        return karty
+
+    def assigned_active_cards(self):
+        karty = Card.objects.filter(status=1,person=self.id,active=True)
+        return karty
+
+    def save(self, *args, **kwargs):
+        hash_date = Person.get_retention_date(self)
+        if hash_date <= datetime.now().date():
+            self.hash_date = hash_date
+            self.name = tools.mieszanie(self.name)
+            self.pesel = tools.mieszanie(self.pesel,11) 
+            self.anonymized = True
+        super(Person,self).save(*args, **kwargs)
 
 class PersonRoles(models.Model):
     person = models.ForeignKey(Person, on_delete=models.DO_NOTHING)

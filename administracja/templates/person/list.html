@@ -6,7 +6,7 @@
 	<thead>
 		<tr>
 			<th>Pracownik</th>
-			<th>Data<br>zatrudnienia</th>
+			<th>Data<br>zatrudnienia (zwolnienia)</th>
 			<th>Aktywny</th>
 			<th>Admin</th>
 		</tr>
@@ -14,13 +14,19 @@
 	<tbody>
 	{% for person in person_list %}
 	<tr>
-	<font {% if person.active is not True %} class='inactive' {% endif %}>
-			<td><a class="external" href="{{ person.get_absolute_url }}">
-				{{ person.name }}</a></td>
-			<td>{{ person.hire_date | date:'Y-m-d' }}</td>
-			<td>{{ person.active | yesno:'Tak,Nie,-' }}</td>
-			<td>{{ person.admin | yesno:'Tak,Nie,-' }}</td> 
-	</font>
+		<td><a class="external" href="{{ person.get_absolute_url }}">
+			{% if person.anonymized %}
+				ID: {{ person.id }} (zanonimizowana)
+			{% else %}
+				{{ person.name }}
+				{% endif %} </a></td>
+		<td>{{ person.hire_date | date:'Y-m-d' }}
+			{% if person.fire_date %}
+			 ({{ person.fire_date | date:"d-m-Y" }})
+			{% endif %}
+		</td>
+		<td>{{ person.active | yesno:'Tak,Nie,-' }}</td>
+		<td>{{ person.admin | yesno:'Tak,Nie,-' }}</td> 
 	</tr>
 	{% endfor %}
 	</tbody>
@@ -30,10 +36,14 @@
     {% include '_pagination.html' with items=page_obj %}
     <!-- end -->
 {% endif %}
+{# Przyciski #}
 <div class="buttons">
+   <a class="button" href="{% url "dashboard" %}">Powrót</a>
+   {% if request.user.is_staff %}
    <a class="button" 
 	href="http://172.16.1.11:8000/admin/administracja/person/add/"
 	rel="noopener noreferrer" target="_blank">
-	dodaj nową</a>
+	nowa osoba</a>
 </div>
+{% endif %}
 {% endblock %}

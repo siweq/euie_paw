@@ -25,11 +25,13 @@ h1, h2, h3, h4, h5 , h6 { font-family: 'Muli', sans-serif; font-weight:normal; }
 h1 {
     border-bottom:1px solid #bbb;
     padding:0 0 10px 0;
-    margin:10px 0 20px 0;
+    margin:10px 0 15px 0;
 }
 
 h2 {
-    margin:30px 0 20px;
+    margin:30px 0 15px;
+    border-bottom:1px solid #ddd;
+    padding:0 0 0 0;
 }
 
 ol {
@@ -38,7 +40,7 @@ ol {
 
 #header {
     padding:10px 100px;
-    font-size:14px;
+    font-size:16px;
     background:#12c064;
     color:#fff;
     border-bottom:4px solid #1cdf78;
@@ -49,15 +51,15 @@ ol {
     font-family: 'Muli', sans-serif;
     float:left;
     color:#f3f7cc;
-    font-size:20px;
-    margin-right:5%;
+    font-size:24px;
+    margin-right:25px;
 }
 
 #header ul.menu {
     list-style:none;
-    float:left;
     margin:0;
-    padding:0;
+    float:left;
+    padding:0 5px 0 5px;
 }
 #header ul.menu li {
     float:left;
@@ -196,10 +198,9 @@ input[type=submit], a.button {
 
 /* messages */
 ul.messages {
-    margin:10px 100px;
+    margin:0 0 15px 0;
     padding:0;
-    list-style-type:
-    none;
+    list-style-type:none;
 }
 ul.messages li.success,
 ul.messages li.warning,
@@ -208,6 +209,7 @@ ul.messages li.info {
     margin:0;
     padding:14px 20px;
     list-style:none;
+    font-size:16px;
     color:#fff;
 }
 

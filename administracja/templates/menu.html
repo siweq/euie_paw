@@ -2,6 +2,9 @@
 	    <li {% if section == "dashboard" %}class="selected"{% endif %}>
 		    <a href="{% url "dashboard" %}">Home</a>
 	    </li>
+	    <li>
+		    <a href="#">Przypisanie kart</a>
+ 	    </li>
 	    <li {% if section == "persons" %}class="selected"{% endif %}>
 		    <a href="{% url "persons" %}">Osoby</a>
 	    </li>
@@ -18,9 +21,11 @@
 	    {% if request.user.is_authenticated %}
 	    <div class="dropdown">
 		    <span>Witaj, {{ request.user.first_name }}!</span>
+		    {% comment %}
 		    <button class="dropbtn">Menu profil</button>
-		    <div class="dropdown-content">
-			<a href="{% url "logout" %}">Wyloguj</a>
+		    {% endcomment %}
+		    <div class="dropdown-content_" style="font-size:13px">
+			    <a href="{% url "logout" %}">Wyloguj</a><br>
 			<a href="{% url "password_change" %}">Zmiana hasła</a>
 		    </div></span></div>
 	    {% else %}

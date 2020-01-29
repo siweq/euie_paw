@@ -20,15 +20,41 @@
          </tr>
          <tr>
 		 <td>Typ</td>
-		 <td>{{ card.type }}</td>
+		 <td>{{ card.get_type_display }}</td>
          </tr>
+	 <tr>
+		 <td>Przypisana osoba</td>
+		 <td>
+		   {% if card.person %}
+		     <a href="{{ person.get_absolute_url }}">
+		   {% endif %}{{ card.person }}
+		 </td>
+	 </tr>
+	 <tr>
+	 	<td>Data wprowadzenia karty</td>
+		<td>{{ card.updated | date:"d-m-Y" }}</td>
+	 </tr>
+	 <tr>
+	 	<td>Data ważności karty</td>
+		<td>{{ card.valid_date | date:"d-m-Y" }}</td>
+	 </tr>
+	 <tr>
+		<td>Status karty</td>
+		<td>{{ card.get_status_display }}
+		  ({{ card.active | yesno:'Aktywna,Nieaktywna,-' }})</td>
+	 </tr>
       </tbody>
    </table>
-   <div class="buttons">
+   <div class="footer" colspan="2">Data ostatniej modyfikacji: {{ card.updated| date:"d-m-Y" }}</div>
+  {# Buttons - karta #}
+     <div class="buttons">
+	<a class="button" href="{% url "cards2" %}">Powrót</a>
+  {% if request.user.is_staff %}
 	<a class="button" href="{{ card.get_admin_url }}"
 		rel="noopener noreferrer" target="_blank">Edytuj</a>
    	<a class="button" href="{{ card.add_admin_url }}"
-		rel="noopener noreferrer" target="_blank">Dodaj rekord</a>
+		rel="noopener noreferrer" target="_blank">Nowa karta</a>
+   {% endif %}
    </div>
 {% else %}
   <h1>Brak karty</h1>

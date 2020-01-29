@@ -25,9 +25,9 @@ class RoleAdmin(admin.ModelAdmin):
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ['id','name','pesel','hire_date','active','fire_date','anonymized']
+    list_display = ['id','name','pesel','hire_date','active','fire_date','anonymized','hash_date']
     list_filter = ('active','anonymized')
-    ordering = ('active','name')
+    ordering = ['name']
 
 @admin.register(PersonRoles)
 class PersonRolesAdmin(admin.ModelAdmin):
@@ -36,8 +36,8 @@ class PersonRolesAdmin(admin.ModelAdmin):
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
     model = Card
-    list_display = ('id','type','active','status','valid_date')
-    list_filter = ('status','type','active','supplier')
+    list_display = ('id','type','active','status','person','valid_date')
+    list_filter = ('status','type','active','supplier','person')
     search_fields = ('id','person','supplier')
     ordering = ['id']
 
