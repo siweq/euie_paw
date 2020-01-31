@@ -88,11 +88,39 @@ ol {
     padding-top:4px;
 }
 
+#footer {
+    position: fixed;
+    overflow:auto;
+    left:0;
+    bottom:0;
+    width: 100%;
+    padding-left:100px;
+    padding-right:310px;
+    background:#12c064;
+    border-top:4px solid #1cdf78;
+}
+
+#footer .footer {
+    font-family: 'Muli', sans-serif;
+    float:left;
+    color:#fff;
+    font-size:12px;
+}
+
+#footer .autor {
+    font-family: 'Muli', sans-serif;
+    margin-right:200px;
+    float:right;
+    color:#fff;
+    font-size:12px;
+    text-align: right;
+}
+
 #content {
     padding:30px 100px;
 }
 
-.footer {
+.menu-footer {
     font-family:'Andale Mono', Monaco, monospace;
     font-size:11px;
     float:right;
@@ -100,9 +128,9 @@ ol {
     padding:5px 0 5px 0;
 }
 
-.inactive {
-    color:#404040;
-    font-weight:normal;
+#inactive {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* forms */
@@ -133,9 +161,10 @@ input, textarea {
 input[type=submit], a.button {
     font-weight:bold;
     background:#12c064;
-    color:#fff;
+    color:white;
     padding:10px 20px;
     font-size:14px;
+    margin-bottom: 10px;
     text-transform:uppercase;
 }
 .errorlist {
@@ -153,9 +182,38 @@ input[type=submit], a.button {
 }
 
 .buttons {
-    /*margin:20px 0 20px 0;*/
     padding-top: 25px;
     padding-bottom 25px;
+}
+
+.buttons-v button {
+    background-color: #12c064;
+    border: none;
+    color: white;
+    cursor: pointer; 
+    width: 50%; 
+    display: block;
+    border-radius: 12px;
+    padding: 15px 24px;:w
+    text-align:left; 
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-transform:uppercase;
+}
+
+.buttons-v button:hover {
+    background-color: #3e8e41;
+}
+
+.button-v a {
+    border-radius: 12px;
+    color: white;
+}
+
+:root {
+    --balloon-color:blue;
+    --balloon-move: 30px;
 }
 
 /* dropdown menu */

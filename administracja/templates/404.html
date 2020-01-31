@@ -1,12 +1,17 @@
 <!-- templates/404.html -->
 {% extends "base.html" %}
 
-{% block title %}Strona nie została odnaleziona (404){% endblock %}
+{% block title %}404 - Strona nie została odnaleziona{% endblock %}
 
 {% block content %}
 <h1>Błąd. Żądana strona nie została odnaleziona</h1>
-<p>DEBUG - wywoływany URL: {{ request.build_absolute_uri }}</p>
 <br>
-<p><a href="{% url "dashboard" %}">Naciśnk, aby wrócić na stronę główną.</a></p>
+<ul class="messages">
+   <li class="error">Błąd. Żądana strona nie została odnaleziona<br>
+   DEBUG - wywoływany URL: {{ request.build_absolute_uri }}</li>
+</ul>
+<div class=<buttons">
+	<a class="button" href="{% url "dashboard" %}">STRONA GŁÓWNA</a>
+</div>
 
 {% endblock %}

@@ -4,5 +4,27 @@
 
 {% block content %}
 <h1>Panel administracyjny systemu SKD</h1>
-<p>Tu będą przyciski funkcji systemu</p>
+<div class="buttons-v">
+	<button class="button-v" data-balloon-pos="right" \
+		aria-label="Formularz do wydawania kart dla osób w systemie SKD">
+		<a href="#">Wydawanie kart</a></button>
+	<button class="button-v" data-balloon-pos="right" \ 
+		aria-label="Przegląd i zarządzanie osobami w systemie">
+		<a href="#">Osoby</a></button>
+	<button class="button-v" data-balloon-pos="right" \
+		aria-label="Zarządzanie kartami RFID">
+		<a href="#">Karty</a></button>
+	<button class="button-v" data-balloon-pos="right" \
+		aria-label="Raporty">
+		<a href="#">Raporty</a></button>
+	{% if request.user.is_staff %}
+	<button class="button-v" data-balloon-pos="right" \
+		aria-label="Administracja systemem SKD (tylko administrator">
+		<a href="#">Administrator</a></button>
+	{% else %}
+	<button class="button-v" id="inactive" data-balloon-pos="right" \
+	        aria-label="Administracja systemem SKD (tylko administrator">
+		administrator</button>
+	{% endif %}
+</div>
 {% endblock %}

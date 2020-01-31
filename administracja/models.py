@@ -24,12 +24,20 @@ class Room(models.Model):
             ('Warehouse','Pomieszczenie magazynowe'),
             ('Other','Inne pomieszczenia')
     )
-    name = models.CharField(max_length=30)
-    location = models.CharField(max_length=50)
+    name = models.CharField(max_length=30,
+            verbose_name="Nazwa")
+    location = models.CharField(max_length=50,
+            verbose_name="Lokalizacja")
     kind = models.CharField(max_length=10,
-            choices = KIND)
+            choices = KIND,
+            verbose_name="Rodzaj pomieszczenia")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name=u'Pomieszczenie'
+        verbose_name_plural=u'Pomieszczenia'
+
     def __str__(self):
         return str(self.name+', '+self.location)
 
@@ -47,30 +55,48 @@ class Reader(models.Model):
             primary_key=True,
             unique=True)
     direction = models.CharField(max_length=3,
-            choices = DIRECTION)
+            choices = DIRECTION,
+            verbose_name="Kierunek")
     room = models.ForeignKey(Room,
             on_delete=models.CASCADE,
-            related_name='room_readers')
-    desc = models.CharField(max_length=250)
+            related_name='room_readers',
+            verbose_name="Pomieszczenie")
+    desc = models.CharField(max_length=250,
+            verbose_name="Opis")
     type = models.CharField(max_length=10,
             choices = RFID_STD,
-            default = 'HID')
+            default = 'HID',
+            verbose_name="Typ")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name=u"Czytnik"
+        verbose_name_plural=u"Czytniki"
+
     def __str__(self):
         return self.desc
 
 class Role(models.Model):
-    name = models.CharField(max_length=10)
-    desc = models.CharField(max_length=50)
-    admin = models.BooleanField(default=False)
+    name = models.CharField(max_length=10,
+            verbose_name="Rola")
+    desc = models.CharField(max_length=50,
+            verbose_name="Opis")
+    admin = models.BooleanField(default=False,
+            verbose_name="Rola administracyjna")
     persons = models.ManyToManyField(
             to='Person',
             through='PersonRoles',
             related_name='used_roles',
-            blank=True)
+            blank=True,
+            verbose_name="Osoba")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name=u"Rola"
+        verbose_name_plural=u"Role"
+
     def __str__(self):
         return self.name
 
@@ -147,8 +173,17 @@ class Person(models.Model):
         super(Person,self).save(*args, **kwargs)
 
 class PersonRoles(models.Model):
-    person = models.ForeignKey(Person, on_delete=models.DO_NOTHING)
-    role = models.ForeignKey(Role, on_delete=models.DO_NOTHING)
+    person = models.ForeignKey(Person, 
+            on_delete=models.DO_NOTHING,
+            verbose_name="Osoba")
+    role = models.ForeignKey(Role, 
+            on_delete=models.DO_NOTHING,
+            verbose_name="Rola")
+
+    class Meta:
+        verbose_name_plural=u"Role Osób"
+        verbose_name=u"Rola Osoby"
+
     def __str__(self):
         return "{} {}".format(self.role_id, self.person_id)
 
@@ -185,7 +220,6 @@ class Card(models.Model):
             verbose_name='Użytkownik') 
     valid_date = models.DateField(blank=True,
             null=True,
-            #dafault=new_valid_date,
             verbose_name='data ważności')
     active = models.BooleanField(default=True,
             verbose_name='aktywna')

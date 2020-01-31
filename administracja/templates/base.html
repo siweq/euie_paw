@@ -5,6 +5,8 @@
     <title>{% block title %}{% endblock %}</title>
     <link href="{% static "css/skdadm.css" %}" rel="stylesheet">
     <link href="{% static "css/pagination.css" %}" rel="stylesheet">
+    {# baloon.css thanks to kazzkiq.github.io/balloon.css/ #}
+    <link href="{% static "css/balloon.css" %}" rel="stylesheet">
     <link rel="shortcut icon" href="{%  static "favicon.ico" %}">
   </head>
   <body>
@@ -36,6 +38,14 @@
     <div id="content">
       {% block content %}
       {% endblock %}
+    </div>
+    <div id="footer">
+	<span class="footer">
+		<p>Administracja Systemem Kontroli Dostępu GK<sup>2</sup>&nbsp;<bold>(ver.1.01)</bold></p>
+	</span>
+	<span class="autor">
+	    <p>&copy;&nbsp; Jakub Molek 2020</p>
+	</span>
     </div>
   </body>
 </html>
